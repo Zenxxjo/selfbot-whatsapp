@@ -1,15 +1,15 @@
-import { savefrom } from '@bochilteam/scraper'
+import caliph from 'caliph-api'
 import fetch from 'node-fetch'
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
     await m.reply('_In progress, please wait..._')
     if (!args[0]) throw `Input URL`
-  var { url } = await (await savefrom (args[0]))[0].url[0]
+    await caliph.downloader.tiktok(args[0]).then(res => {
 
-    console.log(url)
-    if (!url) throw 'Can\'t download video!'
-   await conn.sendMessage(m.chat, { video: { url: url }, caption : '*Sukses*', fileName : 'tiktok.mp4', mimetype : 'video/mp4'})
-
+    console.log(res.nowm)
+    if (!res) throw 'Can\'t download video!'
+   conn.sendMessage(m.chat, { video: { url: res.nowm }, caption : '*Sukses*', fileName : 'tiktok.mp4', mimetype : 'video/mp4'})
+})
 }
 handler.help = ['tiktok'].map(v => v + ' <url>')
 handler.tags = ['downloader']
